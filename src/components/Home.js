@@ -1,11 +1,13 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import db from "../firebase";
 import Collection from "./Collection";
 import Footer from "./Footer";
 import ProductDetails from "./ProductDetails";
 import ProductSlides from "./ProductSlides";
 import Services from "./Services";
 
-const Home = ({ cartItems }) => {
+const Home = ({ cartItems, user }) => {
   const getCount = () => {
     let count = 0;
     cartItems.forEach((cartItem) => {
@@ -13,6 +15,9 @@ const Home = ({ cartItems }) => {
     });
     return count;
   };
+  useEffect(() => {
+    db.collection("users").doc(user.email).collection("cartItems");
+  }, [user.email]);
   return (
     <div>
       <Link to="/checkout">
@@ -29,7 +34,7 @@ const Home = ({ cartItems }) => {
       </Link>
 
       <ProductDetails />
-      <ProductSlides />
+      <ProductSlides user={user} />
       <Collection />
       <Services />
       <Footer />

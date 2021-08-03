@@ -1,7 +1,7 @@
 import CheckoutProduct from "./CheckoutProduct";
 import Subtotal from "./Subtotal";
 
-const Checkout = ({ cartItems }) => {
+const Checkout = ({ cartItems, user }) => {
   const getTotalPrice = () => {
     let total = 0;
     cartItems.forEach((cartItem) => {
@@ -29,6 +29,7 @@ const Checkout = ({ cartItems }) => {
               quantity={cartItem.product.quantity}
               id={cartItem.id}
               key={cartItem.id}
+              user={user}
             />
           ))}
         </div>

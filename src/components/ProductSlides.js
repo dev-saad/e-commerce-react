@@ -7,7 +7,7 @@ import data from "../data/data";
 import ProductCard from "./ProductCard";
 import { useMeasure } from "react-use";
 
-const ProductSlides = () => {
+const ProductSlides = ({ user }) => {
   const [sliderIndex, setSliderIndex] = useState(0);
   const [translate, setTranslate] = useState();
   const [ref, { width }] = useMeasure();
@@ -45,6 +45,7 @@ const ProductSlides = () => {
                   description={property.description}
                   key={property._id}
                   id={property._id}
+                  user={user}
                 />
               </div>
             ))}

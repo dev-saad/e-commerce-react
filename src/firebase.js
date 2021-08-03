@@ -1,13 +1,13 @@
 import firebase from "firebase";
 
 const firebaseConfig = firebase.initializeApp({
-  apiKey: "AIzaSyBSY3ALw2y1wEMc5CsPHomycHjszrNyZ0c",
-  authDomain: "clone-project-b7464.firebaseapp.com",
-  projectId: "clone-project-b7464",
-  storageBucket: "clone-project-b7464.appspot.com",
-  messagingSenderId: "835822324273",
-  appId: "1:835822324273:web:c7318c464fc667ccffe310",
-  measurementId: "G-P4M36S43K3",
+  apiKey: "AIzaSyDDz3F_iveTKNJFyc2S5anaAduU-Nxqvug",
+  authDomain: "react-e-commerce-65cf3.firebaseapp.com",
+  projectId: "react-e-commerce-65cf3",
+  storageBucket: "react-e-commerce-65cf3.appspot.com",
+  messagingSenderId: "222593682161",
+  appId: "1:222593682161:web:ecd0002ea8fd213c8db750",
+  measurementId: "G-LRJLS837SR",
 });
 
 const db = firebase.firestore();

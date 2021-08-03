@@ -2,13 +2,24 @@ import { Add, DeleteOutline, Remove } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 import db from "../firebase";
 
-const CheckoutProduct = ({ description, picture, price, quantity, id }) => {
+const CheckoutProduct = ({
+  description,
+  picture,
+  price,
+  quantity,
+  id,
+  user,
+}) => {
   const [animationClass, setAnimationClass] = useState("");
   const [itemQuantity, setItemQuantity] = useState(quantity);
   useEffect(() => {
-    db.collection("cartItems").doc(id).update({
-      quantity: itemQuantity,
-    });
+    db.collection("users")
+      .doc(user.email)
+      .collection("cartItems")
+      .doc(id)
+      .update({
+        quantity: itemQuantity,
+      });
   }, [itemQuantity]);
   return (
     <div
@@ -50,7 +61,11 @@ const CheckoutProduct = ({ description, picture, price, quantity, id }) => {
         <DeleteOutline
           onClick={() => {
             setTimeout(() => {
-              db.collection("cartItems").doc(id).delete();
+              db.collection("users")
+                .doc(user.email)
+                .collection("cartItems")
+                .doc(id)
+                .delete();
             }, 700);
             setAnimationClass("-translate-x-full opacity-0");
           }}

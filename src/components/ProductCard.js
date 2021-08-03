@@ -1,16 +1,20 @@
 import { LocalMallOutlined, StarRounded } from "@material-ui/icons";
 import db from "../firebase";
 
-const ProductCard = ({ picture, price, description, reviews, id }) => {
+const ProductCard = ({ picture, price, description, reviews, id, user }) => {
   const addToCart = () => {
-    const cartItem = db.collection("cartItems").doc(id);
+    const cartItem = db
+      .collection("users")
+      .doc(user.email)
+      .collection("cartItems")
+      .doc(id);
     cartItem.get().then((doc) => {
       if (doc.exists) {
         cartItem.update({
           quantity: doc.data().quantity + 1,
         });
       } else {
-        db.collection("cartItems").doc(id).set({
+        cartItem.set({
           description,
           picture,
           price,

@@ -12,13 +12,34 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
 
   const getCartItems = () => {
-    db.collection("cartItems").onSnapshot((snapshot) => {
-      const tempItems = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        product: doc.data(),
-      }));
-      setCartItems(tempItems);
-    });
+    if (user === null) {
+      setCartItems(cartItems);
+    } else {
+      db.collection("users")
+        .doc(user.email)
+        .collection("cartItems")
+        .onSnapshot((snapshot) => {
+          const tempItems = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            product: doc.data(),
+          }));
+          setCartItems(tempItems);
+        });
+
+      const checkUser = db.collection("users").doc(user.email);
+
+      checkUser.get().then((userLog) => {
+        if (userLog.exists) {
+          return checkUser;
+        } else {
+          checkUser.set({
+            name: user.name,
+            email: user.email,
+            photo: user.photo,
+          });
+        }
+      });
+    }
   };
 
   const signOut = () => {
@@ -39,15 +60,15 @@ function App() {
           <Header user={user} cartItems={cartItems} signOut={signOut} />
           <Switch>
             <Route path="/" exact>
-              <Home cartItems={cartItems} />
+              <Home cartItems={cartItems} user={user} />
             </Route>
             <Route path="/checkout">
-              <Checkout cartItems={cartItems} />
+              <Checkout user={user} cartItems={cartItems} />
             </Route>
           </Switch>
         </>
       ) : (
-        <Login setUser={setUser} />
+        <Login setUser={setUser} user={user} />
       )}
     </Router>
   );

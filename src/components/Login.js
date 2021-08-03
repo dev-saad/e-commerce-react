@@ -1,19 +1,20 @@
 import { Button } from "@material-ui/core";
-import { auth, provider } from "../firebase";
+import db, { auth, provider } from "../firebase";
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, user }) => {
   const logIn = () => {
     auth
       .signInWithPopup(provider)
       .then((result) => {
-        let user = result.user;
+        let userDet = result.user;
         let userInfo = {
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
+          name: userDet.displayName,
+          email: userDet.email,
+          photo: userDet.photoURL,
         };
         localStorage.setItem("user", JSON.stringify(userInfo));
         setUser(userInfo);
+        window.location.reload();
       })
       .catch((error) => {
         alert(error.message);
